@@ -1,0 +1,71 @@
+// BFT of a graph using adjacency list representation (User Input)
+import java.util.*;
+
+public class BFT_AdjList {
+    private int n;
+    private LinkedList<Integer>[] adjList;
+
+    BFT_AdjList(int n) {
+        this.n = n;
+        adjList = new LinkedList[n];
+
+        for (int i = 0; i < n; i++) {
+            adjList[i] = new LinkedList<>();
+        }
+    }
+
+    // Add edge (undirected graph)
+    void addEdge(int u, int v) {
+        adjList[u].add(v);
+        adjList[v].add(u);
+    }
+
+    // Breadth First Traversal
+    void bft(int startVertex) {
+        boolean[] visited = new boolean[n];
+        Queue<Integer> queue = new LinkedList<>();
+
+        visited[startVertex] = true;
+        queue.add(startVertex);
+
+        System.out.print("Breadth First Traversal: ");
+
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            System.out.print(current + " ");
+
+            for (int neighbor : adjList[current]) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    queue.add(neighbor);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of vertices: ");
+        int n = sc.nextInt();
+
+        BFT_AdjList graph = new BFT_AdjList(n);
+
+        System.out.print("Enter number of edges: ");
+        int e = sc.nextInt();
+
+        System.out.println("Enter edges (u v): ");
+        for (int i = 0; i < e; i++) {
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+            graph.addEdge(u, v);
+        }
+
+        System.out.print("Enter starting vertex: ");
+        int start = sc.nextInt();
+
+        graph.bft(start);
+
+        sc.close();
+    }
+}
