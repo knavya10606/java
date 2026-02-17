@@ -1,0 +1,67 @@
+// BFT adj matrix
+import java.util.*;
+
+public class BFT {
+    private int n; // number of vertices
+    private int[][] adjMatrix;
+
+    BFT(int n) {
+        this.n = n;
+        adjMatrix = new int[n][n];
+    }
+
+    // Add edge (undirected graph)
+    void addEdge(int u, int v) {
+        adjMatrix[u][v] = 1;
+        adjMatrix[v][u] = 1;
+    }
+
+    // Breadth First Traversal
+    void bft(int startVertex) {
+        boolean[] visited = new boolean[n];
+        Queue<Integer> queue = new LinkedList<>();
+
+        visited[startVertex] = true;
+        queue.add(startVertex);
+
+        System.out.print("Breadth First Traversal: ");
+
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            System.out.print(current + " ");
+
+            for (int i = 0; i < n; i++) {
+                if (adjMatrix[current][i] == 1 && !visited[i]) {
+                    visited[i] = true;
+                    queue.add(i);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of vertices: ");
+        int n = sc.nextInt();
+
+        BFT graph = new BFT(n);
+
+        System.out.print("Enter number of edges: ");
+        int e = sc.nextInt();
+
+        System.out.println("Enter edges (u v): ");
+        for (int i = 0; i < e; i++) {
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+            graph.addEdge(u, v);
+        }
+
+        System.out.print("Enter starting vertex: ");
+        int start = sc.nextInt();
+
+        graph.bft(start);
+
+        sc.close();
+    }
+}
