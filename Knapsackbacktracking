@@ -1,0 +1,36 @@
+public class KnapsackBT {
+
+    static int n = 4;
+    static int c= 5; // capacity
+
+    static int profit[] = {3, 4, 5, 6};
+    static int weight[] = {2, 3, 4, 5};
+
+    static int maxProfit = 0;
+
+    static void knapsack(int i, int currWeight, int currProfit) {
+
+        
+        if (currWeight > c)
+            return;
+
+        
+        if (currProfit > maxProfit)
+            maxProfit = currProfit;
+
+      
+        if (i == n)
+            return;
+
+      
+        knapsack(i + 1,currWeight + weight[i],currProfit + profit[i]);
+
+        
+        knapsack(i + 1,currWeight,currProfit);
+    }
+
+    public static void main(String[] args) {
+        knapsack(0, 0, 0);
+        System.out.println("Maximum Profit = " + maxProfit);
+    }
+}
