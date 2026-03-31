@@ -1,0 +1,46 @@
+ import java.util.*;
+
+public class BFS_List {
+    public static void main(String[] args) {
+
+        int n = 5; // number of vertices
+
+        List<Integer>[] adj = new ArrayList[n];
+        for (int i = 0; i < n; i++)
+            adj[i] = new ArrayList<>();
+
+        // Hardcoded edges
+        adj[0].add(1);
+        adj[1].add(0);
+
+        adj[0].add(2);
+        adj[2].add(0);
+
+        adj[1].add(3);
+        adj[3].add(1);
+
+        adj[1].add(4);
+        adj[4].add(1);
+
+        boolean[] visited = new boolean[n];
+
+        int start = 0; // starting vertex
+
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+        visited[start] = true;
+
+        System.out.print("BFS Traversal: ");
+        while (!q.isEmpty()) {
+            int v = q.poll();
+            System.out.print(v + " ");
+
+            for (int i : adj[v]) {
+                if (!visited[i]) {
+                    q.add(i);
+                    visited[i] = true;
+                }
+            }
+        }
+    }
+}
