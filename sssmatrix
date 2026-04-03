@@ -1,0 +1,30 @@
+class DijkstraMatrix {
+    static void dijkstra(int g[][], int s) {
+        int n = g.length, INF = 9999;
+        int d[] = new int[n];
+        boolean v[] = new boolean[n];
+
+        for (int i = 0; i < n; i++) d[i] = INF;
+        d[s] = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            int u = -1, min = INF;
+            for (int j = 0; j < n; j++)
+                if (!v[j] && d[j] < min) { min = d[j]; u = j; }
+
+            v[u] = true;
+
+            for (int j = 0; j < n; j++)
+                if (!v[j] && g[u][j] != 0 && d[u] + g[u][j] < d[j])
+                    d[j] = d[u] + g[u][j];
+        }
+
+        for (int i = 0; i < n; i++)
+            System.out.println(i + " " + d[i]);
+    }
+
+    public static void main(String[] a) {
+        int g[][] = {{0,2,0,6},{2,0,3,8},{0,3,0,0},{6,8,0,0}};
+        dijkstra(g, 0);
+    }
+}
