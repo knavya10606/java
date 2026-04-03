@@ -1,0 +1,42 @@
+import java.util.*;
+
+class DijkstraList {
+    static class E { int v,w; E(int v,int w){this.v=v;this.w=w;} }
+
+    static void dijkstra(List<E>[] a, int s) {
+        int n = a.length, INF = 9999;
+        int d[] = new int[n];
+        boolean v[] = new boolean[n];
+
+        Arrays.fill(d, INF);
+        d[s] = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            int u = -1, min = INF;
+            for (int j = 0; j < n; j++)
+                if (!v[j] && d[j] < min) { min = d[j]; u = j; }
+
+            v[u] = true;
+
+            for (E e : a[u])
+                if (!v[e.v] && d[u] + e.w < d[e.v])
+                    d[e.v] = d[u] + e.w;
+        }
+
+        for (int i = 0; i < n; i++)
+            System.out.println(i + " " + d[i]);
+    }
+
+    public static void main(String[] x) {
+        int n = 4;
+        List<E>[] a = new ArrayList[n];
+        for (int i = 0; i < n; i++) a[i] = new ArrayList<>();
+
+        a[0].add(new E(1,2));
+        a[0].add(new E(3,6));
+        a[1].add(new E(2,3));
+        a[1].add(new E(3,8));
+
+        dijkstra(a, 0);
+    }
+}
